@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Python Playground{% endblock title %}
+
+{% block content %}
+<div style="display: flex; height: 94%;">
+  <textarea class="form-control" id="editor" style="min-height: 100%;">
+def factorial(n):
+  if n == 0:
+      return 1
+  else:
+      return n * factorial(n - 1)
+
+print(factorial(5))</textarea>
+  <textarea class="form-control" id="result" style="min-height: 100%;" disabled></textarea>
+</div>
+
+<style>
+  html,
+  body,
+  .container {
+    height: 100%;
+  }
+
+  textarea.form-control {
+    height: 100%;
+  }
+
+  .btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+</style>
+
+<script>
+  var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+    lineNumbers: true,
+    language: "python",
+    matchBrackets: true,
+    autoCloseBrackets: true,
+  });
+  editor.setSize("100%", "100%");
+
+  document.getElementById("run").addEventListener("click", function () {
+    document.getElementById("run").innerHTML = "<div class='spinner-border spinner-border-sm'></div>";
+    editor.save();
+    var code = document.getElementById("editor").value;
+    fetch("/api/run", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("run").innerHTML = "<i class='fas fa-play'></i> Run";
+        document.getElementById("result").value = data.result;
+      })
+      .catch((err) => {
+        alert(err);
+        document.getElementById("run").innerHTML = "<i class='fas fa-play'></i> Run";
+      });
+  });
+
+</script>
+{% endblock content %}
