@@ -18,6 +18,7 @@ def execute_code(code: str) -> str:
         )
     except subprocess.CalledProcessError as e:
         result = e.stderr
-    print(result)
+    # except TimeoutError:
+    #     result = "Execution time exceeded 3 seconds"
     os.remove(filename)
     return result
