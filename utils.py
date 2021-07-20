@@ -14,7 +14,10 @@ def execute_code(code: str) -> str:
         f.write(code)
     try:
         result = subprocess.check_output(
-            f"python {filename}", shell=True, stderr=subprocess.PIPE
+            f"python {filename}",
+            shell=True,
+            stderr=subprocess.PIPE,
+            env=dict(),
         )
     except subprocess.CalledProcessError as e:
         result = e.stderr
