@@ -1,10 +1,9 @@
 import os
 import subprocess
 import uuid
-from typing import Union
 
 
-def execute_code(code: str) -> Union[str, bytes]:
+def execute_code(code: str) -> bytes:
     """
     Executes the given code in the current shell and returns the output.
     :param code: The code to execute.

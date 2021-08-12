@@ -1,54 +1,31 @@
 # import signal
 
-import os
-
 from deta import Deta
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
-import utils
+from api.routes import api as pyplay_api
+from config import settings
 
 # def handle_func(a, b):
 #     raise TimeoutError
 
 
-app = Flask(__name__)
-deta = Deta(os.getenv("DETA_PROJECT_KEY"))
+flask_app = Flask(__name__)
+
+app = FastAPI(title="Python Playground")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(pyplay_api, prefix="/api")
+templates = Jinja2Templates(directory="templates")
+
+deta = Deta(settings.deta_project_key)
 db = deta.Base("python_playground")
 # signal.signal(signal.SIGALRM, handle_func)
 
 
 @app.get("/")
-def homepage():
-    return render_template("editor.html")
-
-
-@app.get("/s/<id>")
-def read_snippet(id: int):
-    snip = db.get(key=id)
-    if snip is None:
-        return redirect(url_for("homepage"))
-    return id
-
-
-@app.post("/api/run")
-def execute():
-    body = request.json
-    code = body.get("code")
-    try:
-        # signal.alarm(3)
-        result = utils.execute_code(code)
-    except Exception:
-        result = "Execution timed out(max 3 seconds)".encode()
-    finally:
-        # signal.alarm(0)
-        pass
-    return jsonify(result=str(result.decode())), 200
-
-
-@app.post("/api/save")
-def save_to_cloud():
-    pass
-
-
-if __name__ == "__main__":
-    app.run(debug=True, load_dotenv=True)
+async def homepage(request: Request):
+    return templates.TemplateResponse("editor.html", {"request": request})
