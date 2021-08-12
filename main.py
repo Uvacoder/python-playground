@@ -1,6 +1,9 @@
 # import signal
 
-from flask import Flask, jsonify, render_template, request
+import os
+
+from deta import Deta
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 
 import utils
 
@@ -9,12 +12,22 @@ import utils
 
 
 app = Flask(__name__)
+deta = Deta(os.getenv("DETA_PROJECT_KEY"))
+db = deta.Base("python_playground")
 # signal.signal(signal.SIGALRM, handle_func)
 
 
 @app.get("/")
 def homepage():
     return render_template("editor.html")
+
+
+@app.get("/s/<id>")
+def read_snippet(id: int):
+    snip = db.get(key=id)
+    if snip is None:
+        return redirect(url_for("homepage"))
+    return id
 
 
 @app.post("/api/run")
@@ -32,5 +45,10 @@ def execute():
     return jsonify(result=str(result.decode())), 200
 
 
+@app.post("/api/save")
+def save_to_cloud():
+    pass
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, load_dotenv=True)
