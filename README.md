@@ -2,7 +2,9 @@
 
 A simple python playground made for fun. Deployed to [Deta](https://deta.sh). 
 
-## WIP
+### Checkout https://pyplay.deta.dev/s/4amd4ns0niuf
+
+### WIP
 
 - <del>Migrate to FastAPI</del>
 - <del>Share snippets(saved to Deta Base)</del>
