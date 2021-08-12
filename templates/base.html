@@ -117,7 +117,7 @@
                         <input id="snippet-id" style="background-color: #0A0E14; color: wheat; border-color: #18BC9C;" class="form-control me-2" type="search" placeholder="Snippet ID"
                             aria-label="Search" readonly>
                             <button id="ctc" class="btn btn-outline-success" type="button">
-                                <i class="fas fa-copy"></i>
+                                <i class="fas fa-clipboard"></i>
                             </button> &nbsp;
                             <button id="save" class="btn btn-outline-success" type="button">
                                 <i class="fas fa-cloud"></i>
@@ -136,7 +136,7 @@
                 navigator.clipboard.writeText(`https://pyplay.deta.dev/s/${snippetEl.value}`);
                 document.getElementById("ctc").innerHTML = '<i class="fas fa-clipboard-check"></i>';
                 setTimeout(() => {
-                    document.getElementById("ctc").innerHTML = '<i class="fas fa-copy"></i>';
+                    document.getElementById("ctc").innerHTML = '<i class="fas fa-clipboard"></i>';
                 }, 2000);
             }
 
