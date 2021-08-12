@@ -31,4 +31,4 @@ async def save_code_snippet(payload: CodePayload):
     existing = db.fetch(query={"code": code}).items
     if len(existing) != 0:
         return existing[0]
-    return db.put(data={"code": code})
+    return db.put(data={"code": code, "description": payload.description})

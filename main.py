@@ -42,6 +42,9 @@ async def load_snippet_by_id(request: Request, id: str):
     res = db.get(id)
     if res is None:
         return RedirectResponse(url="/", status_code=301)
+    # if res.get("description") == "":
+    #     res["description"] = None
     return templates.TemplateResponse(
-        "editor.html", {"request": request, "code": res.get("code")}
+        "editor.html",
+        {"request": request, "code": res.get("code"), "desc": res.get("description")},
     )
