@@ -48,7 +48,7 @@
       .then((res) => res.json())
       .then((data) => {
         document.getElementById("run").innerHTML = "<i class='fab fa-python'></i> Run";
-        document.getElementById("result").value = data.result;
+        document.getElementById("result").value = "Execution Time: " + data.time + "s" + "\n\n" + "Output:\n" + data.result;
       })
       .catch((err) => {
         alert(err);
