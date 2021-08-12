@@ -5,10 +5,7 @@
 {% block content %}
 <div style="display: flex; height: 94%;">
   <textarea class="form-control" id="editor" style="min-height: 100%;">
-# run this code
-# playground by @pydantic deployed to deta.sh
-
-import this</textarea>
+{{code}}</textarea>
   <textarea class="form-control" id="result" style="min-height: 100%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"  disabled></textarea>
 </div>
 
@@ -58,6 +55,24 @@ import this</textarea>
         document.getElementById("run").innerHTML = "<i class='fab fa-python'></i> Run";
       });
   });
+
+  document.getElementById("save").addEventListener("click", function() {
+    editor.save();
+    var code = document.getElementById("editor").value;
+    fetch("/api/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      document.getElementById("snippet-id").value = data.key;
+      copyIdToClipboard();
+    })
+    .catch((err) => alert(err))
+  })
 
 </script>
 {% endblock content %}

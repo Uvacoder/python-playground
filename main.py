@@ -2,10 +2,9 @@
 
 from deta import Deta
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from flask import Flask, jsonify, redirect, render_template, request, url_for
 
 from api.routes import api as pyplay_api
 from config import settings
@@ -13,8 +12,6 @@ from config import settings
 # def handle_func(a, b):
 #     raise TimeoutError
 
-
-flask_app = Flask(__name__)
 
 app = FastAPI(title="Python Playground")
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -25,7 +22,26 @@ deta = Deta(settings.deta_project_key)
 db = deta.Base("python_playground")
 # signal.signal(signal.SIGALRM, handle_func)
 
+default_code = """
+# run this code
+# playground by @pydantic deployed to deta.sh
+
+import this
+"""
+
 
 @app.get("/")
 async def homepage(request: Request):
-    return templates.TemplateResponse("editor.html", {"request": request})
+    return templates.TemplateResponse(
+        "editor.html", {"request": request, "code": default_code}
+    )
+
+
+@app.get("/s/{id}")
+async def load_snippet_by_id(request: Request, id: str):
+    res = db.get(id)
+    if res is None:
+        return RedirectResponse(url="/", status_code=301)
+    return templates.TemplateResponse(
+        "editor.html", {"request": request, "code": res.get("code")}
+    )
