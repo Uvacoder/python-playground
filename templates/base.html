@@ -5,35 +5,39 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <title>Python Playground</title>
+        <title>PyPlay</title>
+
+        {% block seo_desc %}
+        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta itemprop="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="twitter:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="og:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        {% endblock seo_desc %}
+
         <meta name='viewport' content='width=device-width,initial-scale=1'>
         <!-- Search Engine -->
-        <meta name="title" content="Python Playground">
-        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="title" content="PyPlay">
         <meta name="keywords" content="python,editor,codemirror,snipper,share,playground,amal,amal shaji">
         <meta name="robots" content="index, follow">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="language" content="English">
         <meta name="author" content="Amal Shaji">
-        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
         <meta name="image" content="https://pyplay.deta.dev/static/images/card.png">
         <!-- Schema.org for Google -->
-        <meta itemprop="name" content="Python Playground">
-        <meta itemprop="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta itemprop="name" content="PyPlay">
         <meta itemprop="image" content="https://pyplay.deta.dev/static/images/card.png">
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Python Playground">
-        <meta name="twitter:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="twitter:title" content="PyPlay">
         <meta name="twitter:site" content="https://pyplay.deta.dev">
         <meta name="twitter:creator" content="@pydantic">
         <meta name="twitter:image:src" content="https://pyplay.deta.dev/static/images/card.png">
         <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-        <meta name="og:title" content="Python Playground">
-        <meta name="og:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="og:title" content="PyPlay">
         <meta name="og:image" content="https://pyplay.deta.dev/static/images/card.png">
         <meta name="og:url" content="https://pyplay.deta.dev">
-        <meta name="og:site_name" content="Python Playground">
+        <meta name="og:site_name" content="PyPlay">
         <meta name="og:type" content="website">
         
         <link rel="shortcut icon" type="image/ico"
@@ -91,7 +95,7 @@
     <body>
         <nav class="navbar navbar-expand-lg" style="background-color: #0A0E14;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">Python Playground</a>
+                <a class="navbar-brand" href="/">PyPlay</a>
                 <button class="navbar-toggler" style="color: #0A0E14;" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -107,13 +111,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a download title="download code" class="nav-link" href="pyplay.py" tabindex="-1">
-                                <i class="fas fa-download"></i>
-                            </a>
+                            <button type="button" id="updates" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">
+                                What's new <i class="fas fa-dot-circle"></i>
+                            </button>                           
                         </li>
                         
                     </ul>
                     <form class="d-flex">
+                        <button type="button" style="width: 250px;" class="btn btn-outline-success" data-toggle="modal" data-target="#AddDescription">
+                            Add Description
+                        </button> &nbsp;
+                        
                         <input id="snippet-id" style="background-color: #0A0E14; color: wheat; border-color: #18BC9C;" class="form-control me-2" type="search" placeholder="Snippet ID"
                             aria-label="Search" readonly>
                             <button id="ctc" class="btn btn-outline-success" type="button">
@@ -131,6 +139,7 @@
                 </div>
             </div>
         </nav>
+         
         <script>
             function copyIdToClipboard() {
                 navigator.clipboard.writeText(`https://pyplay.deta.dev/s/${snippetEl.value}`);
@@ -146,5 +155,8 @@
             })
         </script>
         {% block content %}{% endblock content %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>

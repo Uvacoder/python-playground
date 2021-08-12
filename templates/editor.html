@@ -1,14 +1,67 @@
 {% extends 'base.html' %}
 
-{% block title %}Python Playground{% endblock title %}
+{% block title %}PyPlay{% endblock title %}
 
+{% block seo_desc %}
+        {% if desc|length == 0 %}
+        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta itemprop="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="twitter:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="og:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        {% else %}
+        <meta name="description" content="{{desc}} • view on pyplay. Create, run and share python code snippets with your friends">
+        <meta name="description" content="{{desc}} • view on pyplay. Create, run and share python code snippets with your friends">
+        <meta itemprop="description" content="{{desc}} • view on pyplay. Create, run and share python code snippets with your friends">
+        <meta name="twitter:description" content="{{desc}} • view on pyplay. Create, run and share python code snippets with your friends">
+        <meta name="og:description" content="{{desc}} • view on pyplay. Create, run and share python code snippets with your friends">
+        {% endif %}
+{% endblock seo_desc %}
 {% block content %}
+{{desc}}
 <div style="display: flex; height: 94%;">
   <textarea class="form-control" id="editor" style="min-height: 100%;">
 {{code}}</textarea>
-  <textarea class="form-control" id="result" style="min-height: 100%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"  disabled></textarea>
+  <textarea class="form-control" id="result" style="min-height: 100%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"  disabled></textarea>  
+  <!-- Description Modal -->
+  <div class="modal fade" id="AddDescription" tabindex="-1"  aria-labelledby="AddDescriptionTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="form-floating">
+            <textarea class="form-control" id="description" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{desc}}</textarea>
+            <label for="floatingTextarea2">Add a short description to explain the snippet (max 50 chars)</label>
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- What's New Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <label for="basic-url" class="form-label">⚠️ Attention! pyplay is intended for PC and UI supports PC only(currently)</label>
+          <h4>What's new in pyplay?</h4>
+          <ul>
+            <li>save snippet to cloud and share public url</li>
+            <li>display execution time in output</li>
+            <li>add a short description for your snippets</li>
+          </ul>
+          <h4>How to use pyplay?</h4>
+          <ul>
+            <li>write code</li>
+            <li>run code</li>
+            <li>write more code</li>
+            <li>add description</li>
+            <li>save snippet to cloud</li>
+            <li>share public url</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 <style>
   html,
   body,
@@ -18,13 +71,36 @@
   textarea.form-control {
     height: 100%;
   }
+  #description {
+    border-color: #18BC9C;
+    resize: none;
+    color: wheat;
+    background-color: #0d121a;
+    box-shadow: none;
+  }
+  #description:hover {
+    box-shadow: none;
+  }
   .btn:focus {
     outline: none;
     box-shadow: none;
   }
+  .modal-content {
+    background-color: #0d121a;
+    color: wheat;
+  }
 </style>
 
 <script>
+  window.onload = function(e) {
+    if (location.pathname === "/") {
+      visited = localStorage.getItem("pyplay_visited")
+      if (visited === null) {
+        document.getElementById("updates").click();
+        localStorage.setItem("pyplay_visited", true);
+      }
+    }
+  }
   var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
     lineNumbers: true,
     language: "python",
@@ -60,17 +136,19 @@
     document.getElementById("save").innerHTML = '<i class="fas fa-cloud-upload-alt"></i>';
     editor.save();
     var code = document.getElementById("editor").value;
+    var description = document.getElementById("description").value.slice(0, 50);
     fetch("/api/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ code })
+      body: JSON.stringify({ code, description })
     })
     .then((res) => res.json())
     .then((data) => {
       document.getElementById("save").innerHTML = '<i class="fas fa-cloud"></i>';
       document.getElementById("snippet-id").value = data.key;
+      history.replaceState('data to be passed', 'Title of the page', `/s/${data.key}`);
       copyIdToClipboard();
     })
     .catch((err) =>{
