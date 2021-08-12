@@ -24,7 +24,7 @@ def execute():
     try:
         # signal.alarm(3)
         result = utils.execute_code(code)
-    except Exception as e:
+    except Exception:
         result = "Execution timed out(max 3 seconds)".encode()
     finally:
         # signal.alarm(0)

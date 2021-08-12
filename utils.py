@@ -1,9 +1,10 @@
 import os
 import subprocess
 import uuid
+from typing import Union
 
 
-def execute_code(code: str) -> str:
+def execute_code(code: str) -> Union[str, bytes]:
     """
     Executes the given code in the current shell and returns the output.
     :param code: The code to execute.
@@ -14,10 +15,10 @@ def execute_code(code: str) -> str:
         f.write(code)
     try:
         result = subprocess.check_output(
-            f"python {filename}",
+            f"python3 {filename}",
             shell=True,
             stderr=subprocess.PIPE,
-            env=dict(),
+            env=dict(author="Amal Shaji"),
         )
     except subprocess.CalledProcessError as e:
         result = e.stderr
