@@ -60,10 +60,12 @@
         <nav class="navbar navbar-expand-lg" style="background-color: #0A0E14;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">Python Playground</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler" style="color: #0A0E14;" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon">   
+                        <i class="fas fa-hamburger" style="color:#18BC9C; font-size:28px;"></i>
+                    </span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -74,9 +76,9 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                        <input disabled style="background-color: #0A0E14; color: wheat; border-color: #18BC9C;" class="form-control me-2" type="search" placeholder="Snippet ID"
+                        <input id="snippet-id" disabled style="background-color: #0A0E14; color: wheat; border-color: #18BC9C;" class="form-control me-2" type="search" placeholder="Snippet ID"
                             aria-label="Search" readonly>
-                            <button class="btn btn-outline-success" type="button">
+                            <button id="ctc" class="btn btn-outline-success" type="button">
                                 <i class="fas fa-copy"></i>
                             </button> &nbsp;
                             <button class="btn btn-outline-success" type="button">
@@ -91,6 +93,16 @@
                 </div>
             </div>
         </nav>
+        <script>
+            var snippetEl = document.getElementById("snippet-id");
+            document.getElementById("ctc").addEventListener("click", function() {
+                navigator.clipboard.writeText(snippetEl.value);
+                document.getElementById("ctc").innerHTML = '<i class="fas fa-clipboard-check"></i>';
+                setTimeout(() => {
+                    document.getElementById("ctc").innerHTML = '<i class="fas fa-copy"></i>';
+                }, 2000);
+            })
+        </script>
         {% block content %}{% endblock content %}
     </body>
 </html>
