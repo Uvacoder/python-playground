@@ -51,12 +51,13 @@
         document.getElementById("result").value = "Execution Time: " + data.time + "s" + "\n\n" + "Output:\n" + data.result;
       })
       .catch((err) => {
-        alert(err);
         document.getElementById("run").innerHTML = "<i class='fab fa-python'></i> Run";
+        console.error(err);
       });
   });
 
   document.getElementById("save").addEventListener("click", function() {
+    document.getElementById("save").innerHTML = '<i class="fas fa-cloud-upload-alt"></i>';
     editor.save();
     var code = document.getElementById("editor").value;
     fetch("/api/save", {
@@ -68,10 +69,14 @@
     })
     .then((res) => res.json())
     .then((data) => {
+      document.getElementById("save").innerHTML = '<i class="fas fa-cloud"></i>';
       document.getElementById("snippet-id").value = data.key;
       copyIdToClipboard();
     })
-    .catch((err) => alert(err))
+    .catch((err) =>{
+      document.getElementById("save").innerHTML = '<i class="fas fa-cloud"></i>';
+      console.error(err);
+    })
   })
 
 </script>
