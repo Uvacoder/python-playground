@@ -4,6 +4,38 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Python Playground</title>
+        <meta name='viewport' content='width=device-width,initial-scale=1'>
+        <!-- Search Engine -->
+        <meta name="title" content="Python Playground">
+        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="keywords" content="python,editor,codemirror,snipper,share,playground,amal,amal shaji">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="language" content="English">
+        <meta name="author" content="Amal Shaji">
+        <meta name="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="image" content="https://pyplay.deta.dev/static/images/card.png">
+        <!-- Schema.org for Google -->
+        <meta itemprop="name" content="Python Playground">
+        <meta itemprop="description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta itemprop="image" content="https://pyplay.deta.dev/static/images/card.png">
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Python Playground">
+        <meta name="twitter:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="twitter:site" content="https://pyplay.deta.dev">
+        <meta name="twitter:creator" content="@pydantic">
+        <meta name="twitter:image:src" content="https://pyplay.deta.dev/static/images/card.png">
+        <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+        <meta name="og:title" content="Python Playground">
+        <meta name="og:description" content="Tiny python playground. Create, run and share python code snippets with your friends">
+        <meta name="og:image" content="https://pyplay.deta.dev/static/images/card.png">
+        <meta name="og:url" content="https://pyplay.deta.dev">
+        <meta name="og:site_name" content="Python Playground">
+        <meta name="og:type" content="website">
+        
         <link rel="shortcut icon" type="image/ico"
             href="{{url_for('static', path='Python.ico')}}" />
         <link rel="stylesheet" href="{{url_for('static', path='css/bootstrap.min.css')}}">
@@ -82,12 +114,12 @@
                         
                     </ul>
                     <form class="d-flex">
-                        <input id="snippet-id" disabled style="background-color: #0A0E14; color: wheat; border-color: #18BC9C;" class="form-control me-2" type="search" placeholder="Snippet ID"
+                        <input id="snippet-id" style="background-color: #0A0E14; color: wheat; border-color: #18BC9C;" class="form-control me-2" type="search" placeholder="Snippet ID"
                             aria-label="Search" readonly>
                             <button id="ctc" class="btn btn-outline-success" type="button">
                                 <i class="fas fa-copy"></i>
                             </button> &nbsp;
-                            <button class="btn btn-outline-success" type="button">
+                            <button id="save" class="btn btn-outline-success" type="button">
                                 <i class="fas fa-cloud-upload-alt"></i>
                             </button>
                         
@@ -100,13 +132,17 @@
             </div>
         </nav>
         <script>
-            var snippetEl = document.getElementById("snippet-id");
-            document.getElementById("ctc").addEventListener("click", function() {
-                navigator.clipboard.writeText(snippetEl.value);
+            function copyIdToClipboard() {
+                navigator.clipboard.writeText(`https://pyplay.deta.dev/s/${snippetEl.value}`);
                 document.getElementById("ctc").innerHTML = '<i class="fas fa-clipboard-check"></i>';
                 setTimeout(() => {
                     document.getElementById("ctc").innerHTML = '<i class="fas fa-copy"></i>';
                 }, 2000);
+            }
+
+            var snippetEl = document.getElementById("snippet-id");
+            document.getElementById("ctc").addEventListener("click", function() {
+                copyIdToClipboard();
             })
         </script>
         {% block content %}{% endblock content %}
