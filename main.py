@@ -13,7 +13,11 @@ from config import settings
 #     raise TimeoutError
 
 
-app = FastAPI(title="Python Playground")
+app = FastAPI(
+    title="Python Playground",
+    docs_url=None,
+    redoc_url=None,
+)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(pyplay_api, prefix="/api")
 templates = Jinja2Templates(directory="templates")
