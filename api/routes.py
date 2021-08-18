@@ -16,10 +16,10 @@ async def execute_code(payload: CodePayload):
     code = payload.code
     try:
         result, time = execute(code)
-    except Exception:
-        result = "Undocumented error".encode()
+    except Exception as e:
+        result = "Undocumented error"
         time = 0
-    return dict(result=result.decode(), time=time)
+    return dict(result=result, time=time)
 
 
 @api.post("/save")
