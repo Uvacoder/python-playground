@@ -9,10 +9,6 @@ from fastapi.templating import Jinja2Templates
 from api.routes import api as pyplay_api
 from config import settings
 
-# def handle_func(a, b):
-#     raise TimeoutError
-
-
 app = FastAPI(
     title="Python Playground",
     docs_url=None,
@@ -24,7 +20,6 @@ templates = Jinja2Templates(directory="templates")
 
 deta = Deta(settings.deta_project_key)
 db = deta.Base("python_playground")
-# signal.signal(signal.SIGALRM, handle_func)
 
 default_code = """
 # run this code

@@ -15,14 +15,11 @@ db = deta.Base("python_playground")
 async def execute_code(payload: CodePayload):
     code = payload.code
     try:
-        # signal.alarm(3)
         result, time = execute(code)
     except Exception:
-        result = "Execution timed out(max 3 seconds)".encode()
-    finally:
-        # signal.alarm(0)
-        pass
-    return dict(result=str(result.decode()), time=time)
+        result = "Undocumented error".encode()
+        time = 0
+    return dict(result=result.decode(), time=time)
 
 
 @api.post("/save")

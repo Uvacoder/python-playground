@@ -16,16 +16,19 @@ def execute_code(code: str) -> Tuple[bytes, float]:
         f.write(code)
     start = t()
     try:
-        result = subprocess.check_output(
-            f"python3 {filename}",
-            shell=True,
-            stderr=subprocess.PIPE,
+        process_output = subprocess.run(
+            ["python3", filename],
+            shell=False,
+            capture_output=True,
             env=dict(author="Amal Shaji"),
+            check=True,
+            timeout=3,
         )
+        result = process_output.stdout
     except subprocess.CalledProcessError as e:
         result = e.stderr
+    except subprocess.TimeoutExpired as e:
+        result = "Maximum 3 second limit reached".encode()
     end = t()
-    # except TimeoutError:
-    #     result = "Execution time exceeded 3 seconds"
     os.remove(filename)
     return result, end - start
