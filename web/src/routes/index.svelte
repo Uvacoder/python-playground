@@ -6,13 +6,12 @@
 	<div class="row flex-lg-row-reverse align-items-center g-5 py-5" style="margin-top: 5%;">
 		<div class="col-10 col-sm-8 col-lg-6">
 			<img
-				src="/_app/code.jpg"
+				src="/_app/python.svg"
 				class="d-block mx-lg-auto img-fluid"
 				alt="Bootstrap Themes"
 				width="700"
 				height="500"
 				loading="lazy"
-				title="<a href='http://www.freepik.com'>Designed by stories / Freepik</a>"
 			/>
 		</div>
 		<div class="col-lg-6">
@@ -26,8 +25,11 @@
 					type="button"
 					class="btn shadow-none btn-primary btn-lg px-4 me-md-2">Playground</button
 				>
-				<a href="/snippets" type="button" class="btn btn-outline-secondary shadow-none btn-lg px-4"
-					>My Snippets</a
+				<a
+					sveltekit:prefetch
+					href="/snippets"
+					type="button"
+					class="btn btn-outline-secondary shadow-none btn-lg px-4">My Snippets</a
 				>
 			</div>
 		</div>

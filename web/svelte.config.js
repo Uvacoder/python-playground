@@ -11,6 +11,11 @@ const config = {
 			fallback: 'index.html'
 		}),
 		ssr: false,
+		vite: {
+			optimizeDeps: {
+				include: ["highlight.js/lib/core"]
+			}
+		}
 	}
 };
 

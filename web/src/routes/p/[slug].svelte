@@ -137,6 +137,15 @@ def run_code(code):
 	});
 </script>
 
+<svelte:head>
+	<style>
+		body {
+			overflow-y: hidden; /* Hide vertical scrollbar */
+			overflow-x: hidden; /* Hide horizontal scrollbar */
+		}
+	</style>
+</svelte:head>
+
 <!--Navbar start-->
 <nav class="navbar navbar-expand-lg" style="background-color: #0A0E14;">
 	<div class="container-fluid">
