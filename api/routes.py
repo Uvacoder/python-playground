@@ -1,6 +1,6 @@
 from config import settings
 from deta import Deta
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from .schema import CodePayload
 from .utils import execute_code as execute
@@ -36,3 +36,12 @@ async def save_code_snippet(payload: CodePayload):
 @api.get("/code/{id}")
 async def get_coded_by_id(id: str):
     return db.get(key=id)
+
+
+@api.get("/snippets")
+async def get_all_snippets(last: str = Query(None)):
+    data = db.fetch(limit=10, last=last)
+    return {
+        "items": data.items,
+        "last": data.last,
+    }
