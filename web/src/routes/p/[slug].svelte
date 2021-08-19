@@ -16,7 +16,6 @@
 	let editorTextarea;
 	let output = '',
 		code = '# Please wait while we check for any code associated with this id';
-	let save = 0;
 	let cloudIcon;
 	export let slug, host;
 
@@ -63,6 +62,8 @@ def run_code(code):
 				editor.setValue(
 					'# looks like a fresh template\n# write some code\n# run some code\n# add description\n# save to cloud\n\nimport this'
 				);
+
+				description = 'The Zen of Python';
 			}
 		} catch (err) {
 			console.error(err);
@@ -111,7 +112,7 @@ def run_code(code):
 		editor.save();
 		$pyodide.globals.set('code_to_run', editorTextarea.value);
 		try {
-			output = await $pyodide.runPython('run_code(code_to_run)');
+			output = 'Output:\n' + (await $pyodide.runPython('run_code(code_to_run)'));
 		} catch (err) {
 			console.error(err);
 		}
@@ -167,15 +168,7 @@ def run_code(code):
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<button
-						type="button"
-						id="AddDescription"
-						class="btn shadow-none btn-outline-success"
-						data-toggle="modal"
-						data-target="#exampleModalCenter"
-					>
-						Description
-					</button>
+					<button type="button" class="btn shadow-none btn-outline-success"> Description </button>
 				</li>
 			</ul>
 			{#if $pyodide}
@@ -183,7 +176,7 @@ def run_code(code):
 					<a href="/" class="shadow-none btn btn-outline-success" type="button"> Home </a>&nbsp;
 					<input
 						id="snippet-id"
-						style="background-color: #0A0E14; color: wheat; border-color: #18BC9C; color: #18BC9C;"
+						style="background-color: #0A0E14; border-color: #18BC9C; color: #18BC9C;"
 						class="shadow-none form-control me-2"
 						type="search"
 						placeholder="Snippet ID"
@@ -232,36 +225,18 @@ def run_code(code):
 	<textarea class="form-control" id="editor" bind:this={editorTextarea} style="min-height: 100%;"
 		>{code}</textarea
 	>
-	<textarea
-		class="form-control"
-		id="result"
-		style="min-height: 100%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"
-		disabled>{output}</textarea
-	>
-	<div
-		class="modal fade"
-		id="exampleModalCenter"
-		tabindex="-1"
-		aria-labelledby="AddDescriptionTitle"
-		aria-hidden="true"
-	>
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-floating">
-						<textarea
-							class="form-control"
-							id="description"
-							placeholder="Leave a comment here"
-							style="height: 100px"
-						/>
-						<label for="floatingTextarea2"
-							>Add a short description to explain the snippet (max 50 chars)</label
-						>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="form-control" style="background-color: #0d121a;">
+		<textarea
+			placeholder="Add a short description to explain the snippet (max 50 chars)"
+			bind:value={description}
+			style="height: 20%;border: none;outline: none;color: #18BC9C;width: 100%;background-color: #0d121a;resize:none;"
+		/>
+		<textarea
+			class="form-control"
+			id="result"
+			style="min-height: 100%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"
+			disabled>{output}</textarea
+		>
 	</div>
 </div>
 

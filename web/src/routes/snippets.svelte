@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Highlight from 'svelte-highlight';
 	import python from 'svelte-highlight/src/languages/python';
-	import github from 'svelte-highlight/src/styles/github-dark';
+	import github from 'svelte-highlight/src/styles/github';
 
 	let items, last;
 
@@ -54,7 +54,7 @@
 			justify-content: center;
 			align-items: center;"
 			>
-				<div style="width: 40%; ">
+				<div style="width: 100%; ">
 					<Highlight language={python} code={item.code} />
 				</div>
 				<div class="card-body">
