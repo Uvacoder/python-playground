@@ -17,6 +17,7 @@
 	let output = '',
 		code = '# Please wait while we check for any code associated with this id';
 	let cloudIcon;
+	let isNavOpen = false;
 	export let slug, host;
 
 	let id, description;
@@ -155,6 +156,7 @@ def run_code(code):
 			class="navbar-toggler"
 			style="color: #0A0E14;"
 			type="button"
+			on:click={() => (isNavOpen = !isNavOpen)}
 			data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent"
@@ -165,12 +167,7 @@ def run_code(code):
 				<i class="fas fa-hamburger" style="color:#18BC9C; font-size:28px;" />
 			</span>
 		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item">
-					<button type="button" class="btn shadow-none btn-outline-success"> Description </button>
-				</li>
-			</ul>
+		<div class="collapse navbar-collapse" class:show={isNavOpen} id="navbarSupportedContent">
 			{#if $pyodide}
 				<form class="d-flex">
 					<a href="/" class="shadow-none btn btn-outline-success" type="button"> Home </a>&nbsp;
