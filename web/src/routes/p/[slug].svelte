@@ -129,9 +129,9 @@ def run_code(code):
 			theme: 'ayu-dark'
 		});
 		editor.setSize('100%', '100%');
+		await getCodeByID();
 		await setupEnvironment();
 		await setup_pyodide();
-		await getCodeByID();
 	});
 
 	onDestroy(() => {
@@ -142,7 +142,7 @@ def run_code(code):
 <svelte:head>
 	<style>
 		body {
-			overflow-y: hidden; /* Hide vertical scrollbar */
+			/* overflow-y: hidden; Hide vertical scrollbar */
 			overflow-x: hidden; /* Hide horizontal scrollbar */
 		}
 	</style>
@@ -151,7 +151,6 @@ def run_code(code):
 <!--Navbar start-->
 <nav class="navbar navbar-expand-lg" style="background-color: #0A0E14;">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="/">PyPlay</a>
 		<button
 			class="navbar-toggler"
 			style="color: #0A0E14;"
@@ -209,6 +208,16 @@ def run_code(code):
 						><i class="fab fa-python" />
 						Run</button
 					>
+					&nbsp;
+					<button
+						type="button"
+						class="btn shadow-none btn-outline-success"
+						data-bs-toggle="modal"
+						data-bs-target="#exampleModal"
+						style="width: 250px;"
+					>
+						Add Description
+					</button>
 				</form>
 			{:else}
 				<p style="color: #18BC9C;">Loading Environment</p>
@@ -224,21 +233,71 @@ def run_code(code):
 	>
 	<div class="form-control" style="background-color: #0d121a;">
 		<textarea
-			placeholder="Add a short description to explain the snippet (max 50 chars)"
-			bind:value={description}
-			style="height: 20%;border: none;outline: none;color: #18BC9C;width: 100%;background-color: #0d121a;resize:none;"
-		/>
-		<textarea
 			class="form-control"
 			id="result"
-			style="min-height: 100%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"
+			style="min-height: 90%; background-color: #0d121a; color: wheat; border-top: none; border-right: none; border-left: #18BC9C;"
 			disabled>{output}</textarea
 		>
+	</div>
+</div>
+
+<!-- Modal -->
+<div
+	class="modal fade"
+	id="exampleModal"
+	tabindex="-1"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content" style="background-color: #0A0E14; color: #2FB380;">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel" style="color: #2FB380;">
+					Snippet Description
+				</h5>
+				<button
+					type="button"
+					id="btn-close"
+					class="btn-close shadow-none"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				/>
+			</div>
+			<div class="modal-body">
+				<form class="form-floating">
+					<input
+						type="text"
+						class="form-control shadow-none"
+						id="floatingInputValue"
+						bind:value={description}
+						style="background-color: #0A0E14; color: #2FB380;"
+					/>
+					<label for="floatingInputValue">Description</label>
+				</form>
+			</div>
+			<div class="modal-footer" style="background-color: #0A0E14; color: #2FB380;">
+				<button
+					type="button"
+					class="btn btn-outline-success shadow-none"
+					on:click={() => {
+						document.getElementById('btn-close').click();
+					}}>Save changes</button
+				>
+			</div>
+		</div>
 	</div>
 </div>
 
 <style>
 	#editor {
 		resize: none;
+	}
+	#result {
+		font-size: medium;
+		resize: none;
+		border-bottom: none;
+	}
+	#snippet-id {
+		max-width: 30%;
 	}
 </style>
