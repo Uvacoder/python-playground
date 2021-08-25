@@ -27,8 +27,10 @@ async def save_code_snippet(payload: CodePayload):
     code = payload.code
     existing = db.fetch(query={"code": code}).items
     if len(existing) != 0:
-        existing_code = existing[0]
-        if existing_code == payload.dict():
+        existing_code: dict = existing[0]
+        without_id = existing_code.copy()
+        without_id.pop("key")
+        if without_id == payload.dict(exclude={"id"}):
             return existing_code
     return db.put(
         data={"code": code, "description": payload.description}, key=payload.id
