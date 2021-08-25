@@ -9,8 +9,8 @@
 				src="/_app/python.svg"
 				class="d-block mx-lg-auto img-fluid"
 				alt="Bootstrap Themes"
-				width="700"
-				height="500"
+				width="500"
+				height="300"
 				loading="lazy"
 			/>
 		</div>
