@@ -10,4 +10,4 @@ A simple python playground made for fun. Deployed to [Deta](https://deta.sh).
 - <del>Share snippets(saved to Deta Base)</del>
 - <del>Limit execution time(3 seconds)</del>
 
-[![Deploy](https://button.deta.dev/1/svg)](https://go.deta.dev/deploy?repo=your-repo-url)
+[![Deploy](https://button.deta.dev/1/svg)](https://go.deta.dev/deploy?repo=https://github.com/Uvacoder/python-playground)
